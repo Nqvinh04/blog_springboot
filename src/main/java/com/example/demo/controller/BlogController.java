@@ -104,16 +104,21 @@ public class BlogController {
     @GetMapping("/delete/blog/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id){
         Blog blog = blogService.findBlogById(id);
-        ModelAndView modelAndView = new ModelAndView("blog/delete");
-        modelAndView.addObject("blogs", blog);
+        blogService.remove(blog.getId());
+        ModelAndView modelAndView = new ModelAndView("redirect:/blog");
+//        ModelAndView modelAndView = new ModelAndView("blog/delete");
+//        modelAndView.addObject("blogs", blog);
         return modelAndView;
     }
 
 
-    @PostMapping("/delete/blog")
-    public String deleteCustomer(@ModelAttribute("blog") Blog blog){
-        blogService.remove(blog.getId());
-        return "redirect:/blog";
-    }
+//    @PostMapping("/delete/blog")
+//    public String deleteCustomer(@ModelAttribute("blog") Blog blog){
+//        blogService.remove(blog.getId());
+//        return "redirect:/blog";
+//    }
+
+//    @GetMapping("/view/blog/{id}")
+//    public ModelAndView
 
 }
