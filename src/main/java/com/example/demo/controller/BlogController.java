@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,7 +52,7 @@ public class BlogController {
     }
 
     @PostMapping("/create/blog")
-    public ModelAndView saveBlog(@ModelAttribute Blog blog){
+    public ModelAndView saveBlog(@ModelAttribute("blog") Blog blog, @RequestParam ("content-html")String content) throws IOException {
         MultipartFile file = blog.getUpload();
         String image = file.getOriginalFilename();
         blog.setImage(image);
@@ -65,7 +62,11 @@ public class BlogController {
         } catch (IOException e){
             e.printStackTrace();
         }
+        String content_id = blog.getTitle().replaceAll("\\s+","-").toLowerCase();
+        blogService.saveContent(content_id,content);
+        blog.setContent_id(content_id);
         blogService.save(blog);
+
         ModelAndView modelAndView = new ModelAndView("blog/create");
         modelAndView.addObject("blogs", new Blog());
         return modelAndView;
@@ -73,16 +74,28 @@ public class BlogController {
 
 
     @GetMapping("edit/blog/{id}")
-    public ModelAndView showEditBlog(@PathVariable Long id){
+    public ModelAndView showEditBlog(@PathVariable Long id) throws IOException {
         Blog blog = blogService.findBlogById(id);
-        ModelAndView modelAndView = new ModelAndView("blog/edit");
-        modelAndView.addObject("blogs", blog);
+        ModelAndView modelAndView;
+        if(blog != null){
+            modelAndView = new ModelAndView("blog/edit");
+            modelAndView.addObject("blogs", blog);
+            String content_id = blog.getContent_id();
+            String content = blogService.getContent(content_id);
+            modelAndView.addObject("content", content);
+        } else {
+            modelAndView = new ModelAndView("error");
+        }
+
         return modelAndView;
     }
 
     @PostMapping("edit/blog")
-    public ModelAndView updateBlog(@ModelAttribute("blog") Blog blog){
+    public ModelAndView updateBlog(@ModelAttribute("blog") Blog blog, @RequestParam("content-html") String content) throws IOException {
+        String content_id = blogService.findBlogById(blog.getId()).getContent_id();
+        blog.setContent_id(content_id);
         blogService.save(blog);
+        blogService.saveContent(content_id, content);
         ModelAndView modelAndView = new ModelAndView("blog/edit");
         modelAndView.addObject("blogs", new Blog());
         return modelAndView;

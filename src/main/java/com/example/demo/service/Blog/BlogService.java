@@ -1,9 +1,8 @@
 package com.example.demo.service.Blog;
 
 import com.example.demo.model.Blog;
-import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.io.IOException;
 
 
 public interface BlogService {
@@ -14,4 +13,8 @@ public interface BlogService {
     void save(Blog blog);
 
     void remove(Long id);
+
+    void saveContent(String content_id, String content) throws IOException;
+
+    String getContent(String content_id) throws IOException;
 }
