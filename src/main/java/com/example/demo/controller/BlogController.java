@@ -107,7 +107,7 @@ public class BlogController {
         blogService.remove(blog.getId());
         ModelAndView modelAndView = new ModelAndView("redirect:/blog");
 //        ModelAndView modelAndView = new ModelAndView("blog/delete");
-//        modelAndView.addObject("blogs", blog);
+//        modelAndView.addObject("blogs", blog);        
         return modelAndView;
     }
 
