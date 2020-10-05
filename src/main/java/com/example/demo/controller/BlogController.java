@@ -15,9 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
+
 
 @Controller
+@RequestMapping("/blog")
 public class BlogController {
     @Autowired
     private BlogService blogService;
@@ -36,7 +37,7 @@ public class BlogController {
         return categoryService.findAll();
     }
 
-    @GetMapping("/blog")
+    @GetMapping("")
     public ModelAndView listBlog(){
         Iterable<Blog> blogs = blogService.findAll();
         ModelAndView modelAndView = new ModelAndView("blog/list");
@@ -44,14 +45,14 @@ public class BlogController {
         return modelAndView;
     }
 
-    @GetMapping("/create/blog")
+    @GetMapping("/create")
     public ModelAndView showCreateBlog(){
         ModelAndView modelAndView = new ModelAndView("blog/create");
         modelAndView.addObject("blogs", new Blog());
         return modelAndView;
     }
 
-    @PostMapping("/create/blog")
+    @PostMapping("/create")
     public ModelAndView saveBlog(@ModelAttribute("blog") Blog blog, @RequestParam ("content-html")String content) throws IOException {
         MultipartFile file = blog.getUpload();
         String image = file.getOriginalFilename();
@@ -73,7 +74,7 @@ public class BlogController {
     }
 
 
-    @GetMapping("edit/blog/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView showEditBlog(@PathVariable Long id) throws IOException {
         Blog blog = blogService.findBlogById(id);
         ModelAndView modelAndView;
@@ -90,7 +91,7 @@ public class BlogController {
         return modelAndView;
     }
 
-    @PostMapping("edit/blog")
+    @PostMapping("/edit")
     public ModelAndView updateBlog(@ModelAttribute("blog") Blog blog, @RequestParam("content-html") String content) throws IOException {
         String content_id = blogService.findBlogById(blog.getId()).getContent_id();
         blog.setContent_id(content_id);
@@ -101,17 +102,17 @@ public class BlogController {
         return modelAndView;
     }
 
-    @GetMapping("/delete/blog/{id}")
+    @GetMapping("/delete/{id}")
     public ModelAndView showDeleteForm(@PathVariable Long id){
-        Blog blog = blogService.findBlogById(id);
-        blogService.remove(blog.getId());
+//        Blog blog = blogService.findBlogById(id);
+        blogService.remove(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/blog");
 //        ModelAndView modelAndView = new ModelAndView("blog/delete");
-//        modelAndView.addObject("blogs", blog);        
+//        modelAndView.addObject("blogs", blog);
         return modelAndView;
     }
 
-
+//
 //    @PostMapping("/delete/blog")
 //    public String deleteCustomer(@ModelAttribute("blog") Blog blog){
 //        blogService.remove(blog.getId());
