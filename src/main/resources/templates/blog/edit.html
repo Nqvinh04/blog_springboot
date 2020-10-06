@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2><a href="/blog">Blog List</a></h2>
-<form th:action="@{/edit/blog}" th:object="${blogs}" method="post">
+<form th:action="@{/edit}" th:object="${blogs}" method="post">
     <input th:type="hidden" name="id" th:field="*{id}">
     <div class="form-group">
         <label for="tittle">Tittle:</label>

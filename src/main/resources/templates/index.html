@@ -1,10 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1>Trang chu</h1>
+
+<ul>
+    <li><a href="/">Đăng Nhập</a></li>
+    <li><a href="/users/create">Đăng Ký</a></li>
+</ul>
+<div>
+    <section class="blog-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 col-lg-8 col-md-7">
+                    <div class="section-title text-white">
+                        <h2>Latest News</h2>
+                    <!-- Blog item -->
+                        <form>
+                            <th:block th:each="blog : ${blogs}">
+                                <div class="blog-item">
+                                    <div class="blog-thumb">
+                                        <img th:src="${blog.image}" alt="">
+                                    </div>
+                                    <div class="blog-text text-box text-white">
+                                        <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
+                                        <h3>The best online game is out now!</h3>
+                                        <p th:text="${blog.description}"></p>
+                                        <a th:href="@{/view/__${blog.id}__}" class="read-more">Read More  <img th:src="${blog.image}" alt="#"/></a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 </body>
 </html>

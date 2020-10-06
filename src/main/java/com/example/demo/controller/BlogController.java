@@ -7,6 +7,7 @@ import com.example.demo.service.Category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -40,10 +41,19 @@ public class BlogController {
     @GetMapping("")
     public ModelAndView listBlog(){
         Iterable<Blog> blogs = blogService.findAll();
-        ModelAndView modelAndView = new ModelAndView("blog/list");
+        ModelAndView modelAndView = new ModelAndView("blog/create");
         modelAndView.addObject("blogs", blogs);
         return modelAndView;
     }
+
+
+//    @GetMapping("")
+//    public ModelAndView home(){
+//        Iterable<Blog> blogs = blogService.findAll();
+//        ModelAndView modelAndView = new ModelAndView("index");
+//        modelAndView.addObject("blogs", blogs);
+//        return modelAndView;
+//    }
 
     @GetMapping("/create")
     public ModelAndView showCreateBlog(){

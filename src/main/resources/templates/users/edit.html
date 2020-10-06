@@ -5,59 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<h2><a href="/blog">Blog List</a></h2>
-<form th:action="@{/edit/blog}" th:object="${blogs}" method="post">
-    <input th:type="hidden" name="id" th:field="*{id}">
+<h2><a href="/users">Blog List</a></h2>
+<form th:action="@{/edit}" th:object="${users}" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label for="tittle">Tittle:</label>
-        <input type="text" id="tittle" th:field="*{title}" class="form-control"/>
+        <label for="username">UserName:</label>
+        <input type="hidden" id="username" th:field="*{username}" class="form-control"/>
     </div>
+
     <div class="form-group">
-        <label for="category">Category:</label>
-        <select id="category" class="form-control" th:field="*{category.categoryId}" name="category">
-            <option th:each="c : ${categorys}"
-                    th:value="${c.categoryId}"
-                    th:text="${c.categoryName}"
-                    th:seleted="(${c.categoryId}==*{category.categoryId})">
-            </option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="tags">Tags:</label>
-        <input type="text" id="tags" th:field="*{tags}" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label for="upload">Image:</label>
-        <input type="file" id="upload" th:field="*{upload}" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label for="content">Description:</label>
-        <input type="text" id="content" th:field="*{description}" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <textarea name="editor" th:text="${content}"></textarea>
-        <div id="editor-content"></div>
-        <script>
-            let editor = CKEDITOR.replace('editor');
-            editor.on('change',function (event){
-                let new_content = event.editor.getData();
-                document.getElementById("editor-content").innerHTML = "<input type='text' name='content-html' value='"+new_content+"'/>";
-            });
-        </script>
-    </div>
-    <div class="form-group">
-        <label for="author">Author:</label>
-        <input type="text" id="author" th:field="*{author}" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label for="status">Status:</label>
-        <select id="status" class="form-control" th:field="*{status}">
-            <option th:value="Published" th:text="Publish"></option>
-            <option th:value="Draft" th:text="Draft"></option>
-            <option th:value="Private" th:text="Private"></option>
-        </select>
+        <label for="passworld">PassWorld:</label>
+        <input type="text" id="passworld" th:field="*{password}" class="form-control"/>
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
-</form>
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -17,6 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+     private CustomSuccessHandler customSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -39,6 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .roles("USER", "ADMIN");
         auth.userDetailsService(usersService)
                 .passwordEncoder(passwordEncoder());
+
+
     }
 
     @Override
@@ -48,9 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/blog/**").hasRole("ADMIN")
                 .and()
-                .authorizeRequests().antMatchers("/user/**").hasRole("USER")
+                .authorizeRequests().antMatchers("/users/**").hasRole("USERS")
                 .and().formLogin()
-                .and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                .successHandler(customSuccessHandler)
+                .and().csrf()
+                .and().logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 }

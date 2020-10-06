@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 
 @Controller
+@RequestMapping("/users")
 public class UsersController {
     @Autowired
     private UsersService usersService;
@@ -23,7 +24,7 @@ public class UsersController {
     @Value("D:/Users-springboot/src/main/resources/templates/image/user/")
     private String Path;
 
-    @GetMapping("/users")
+    @GetMapping(" ")
     public ModelAndView listUser(){
         Iterable<Users> users = usersService.findAll();
         ModelAndView modelAndView = new ModelAndView("users/list");
@@ -31,14 +32,14 @@ public class UsersController {
         return modelAndView;
     }
 
-    @GetMapping("/users/create")
+    @GetMapping("/create")
     public ModelAndView showCreateUser(){
         ModelAndView modelAndView = new ModelAndView("users/create");
         modelAndView.addObject("users", new Users());
         return modelAndView;
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/create")
     public ModelAndView saveUser(@ModelAttribute("users") Users users){
         usersService.save(users);
         ModelAndView modelAndView = new ModelAndView("users/create");
@@ -46,7 +47,7 @@ public class UsersController {
                 return modelAndView;
     }
 
-    @GetMapping("/users/edit/{id}")
+    @GetMapping("/edit/{id}")
     public ModelAndView showEditUser(@PathVariable Long id){
         Users users = usersService.findUsersById(id);
         ModelAndView modelAndView = new ModelAndView("users/edit");
@@ -54,7 +55,7 @@ public class UsersController {
         return modelAndView;
     }
 
-    @PostMapping("/users/edit")
+    @PostMapping("/edit")
     public ModelAndView updateUser(@ModelAttribute("Users") Users users) throws IOException {
         usersService.save(users);
         ModelAndView modelAndView = new ModelAndView("users/edit");
@@ -62,10 +63,9 @@ public class UsersController {
         return modelAndView;
     }
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/delete/{id}")
     public ModelAndView deleteUser(@PathVariable Long id){
-        Users users = usersService.findUsersById(id);
-        usersService.remove(users.getUserId());
+        usersService.remove(id);
         ModelAndView modelAndView = new ModelAndView("redirect:/users");
         return modelAndView;
     }
