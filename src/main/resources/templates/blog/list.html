@@ -41,9 +41,9 @@
                 <td th:text="${blog.date}"></td>
                 <td th:text="${blog.author}"></td>
                 <td th:text="${blog.status}"></td>
-                <td><a th:href="@{/view/__${blog.id}__}" class="btn btn-success" role="button">View</a></td>
-                <td><a th:href="@{/edit/__${blog.id}__}" class="btn btn-success" role="button">Edit</a></td>
-                <td><a th:href="@{/delete/__${blog.id}__}" class="btn btn-success" role="button"
+                <td><a th:href="@{/blog/view/__${blog.id}__}" class="btn btn-success" role="button">View</a></td>
+                <td><a th:href="@{/blog/edit/__${blog.id}__}" class="btn btn-success" role="button">Edit</a></td>
+                <td><a th:href="@{/blog/delete/__${blog.id}__}" class="btn btn-success" role="button"
                        onclick="return confirm('Are you sure?')">Delete</a></td>
             </tr>
         </th:block>

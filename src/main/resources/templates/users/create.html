@@ -17,7 +17,7 @@
 </p>
 <div class="container">
     <h2>Danh sách người dùng</h2>
-    <form th:action="@{/create}" th:object="${users}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/users/create}" th:object="${users}" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="username">UserName:</label>
             <input type="text" id="username" th:field="*{username}" class="form-control"/>
