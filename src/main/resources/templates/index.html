@@ -22,12 +22,12 @@
                         <form>
                             <th:block th:each="blog : ${blogs}">
                                 <div class="blog-item">
-                                    <div class="blog-thumb">
-                                        <img th:src="${blog.image}" alt="">
-                                    </div>
+<!--                                    <div class="blog-thumb">-->
+<!--                                        <img th:src="${blog.image}" alt="">-->
+<!--                                    </div>-->
                                     <div class="blog-text text-box text-white">
-                                        <div class="top-meta">11.11.18  /  in <a href="">Games</a></div>
-                                        <h3>The best online game is out now!</h3>
+                                        <div class="top-meta"><p th:text="${blog.date}"></p></div>
+                                        <h3 th:text="${blog.title}"></h3>
                                         <p th:text="${blog.description}"></p>
                                         <a th:href="@{/view/__${blog.id}__}" class="read-more">Read More  <img th:src="${blog.image}" alt="#"/></a>
                                     </div>
